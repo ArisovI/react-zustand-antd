@@ -1,6 +1,6 @@
 import { Button, Flex, Form, Input, List, notification } from 'antd'
-import { useStore } from './store'
 import Title from 'antd/es/typography/Title'
+import { useSelectorAddFn, useSelectorTodos } from './hooks'
 const { TextArea } = Input
 
 type FieldType = {
@@ -16,7 +16,9 @@ export type TodoItem = {
 
 function App() {
   const [form] = Form.useForm()
-  const { todos, add } = useStore()
+  // const { todos, add } = useStore((state) => state)
+  const { todos } = useSelectorTodos()
+  const { add } = useSelectorAddFn()
   const [api, contextHolder] = notification.useNotification()
 
   return (
