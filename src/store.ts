@@ -1,19 +1,36 @@
 import { create } from 'zustand'
-import type { TodoItem } from './App'
-import { persist } from 'zustand/middleware'
 
-type TStore = {
-  todos: TodoItem[]
-  add: (todo: TodoItem) => void
+type User = {
+  id: 1
+  username: string
+  email: string
+  firstName: string
+  lastName: string
+  gender: 'female' | 'male'
+  image: string
+  accessToken: string
+  refreshToken: string
 }
 
-export const useStore = create<TStore>()(
-  persist(
-    (set) => ({
-      todos: [],
-      add: (todo: TodoItem) =>
-        set((state) => ({ todos: [...state.todos, todo] })),
-    }),
-    { name: 'todos-storage' },
-  ),
-)
+type UserBody = {
+  username: string
+  password: string
+}
+
+type TStore = {
+  user: User | null
+  isAuthenticated: boolean
+  isLoading: boolean
+  isError: boolean
+  error: string | null
+  isLoginFn: (body: UserBody) => unknown
+}
+
+export const useStore = create<TStore>(() => ({
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  isError: false,
+  error: null,
+  isLoginFn: async () => {},
+}))
